@@ -1,0 +1,221 @@
+{% load static%}
+{% load socialaccount %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Professional Portal</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary-color: #89A8B2;
+      --secondary-color: #B3C8CF;
+      --light-color: #E5E1DA;
+      --lightest-color: #F1F0E8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--lightest-color) 0%, var(--light-color) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .register-container {
+      margin-top: 100px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(137, 168, 178, 0.15);
+      width: 100%;
+      max-width: 450px;
+      overflow: hidden;
+    }
+
+    .header-section {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header-section h1 {
+      color: white;
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .form-section {
+      padding: 40px 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-control {
+      border-radius: 12px;
+      padding: 15px 20px;
+      font-size: 16px;
+      background: var(--lightest-color);
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      background: white;
+      box-shadow: 0 0 0 0.2rem rgba(137, 168, 178, 0.15);
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-color);
+      opacity: 0.7;
+    }
+
+    .btn-register {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      border-radius: 12px;
+      padding: 15px 30px;
+      font-size: 16px;
+      color: white;
+      width: 100%;
+      text-transform: uppercase;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 25px 0;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      display: inline-block;
+      width: 45%;
+      height: 1px;
+      background: var(--light-color);
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    .login-text {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .login-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+      {% include "navbar.html" %}
+
+  
+  <div class="register-container fade-in">
+    <div class="header-section">
+      <h1>Register</h1>
+    </div>
+    <div class="form-section">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" name="username" placeholder="Username" required />
+          <i class="fas fa-user input-icon"></i>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required />
+          <i class="fas fa-envelope input-icon"></i>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+          <i class="fas fa-lock input-icon"></i>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" id="confirmPassword" name="confirmpassword" placeholder="Confirm Password" required />
+          <i class="fas fa-lock input-icon"></i>
+        </div>
+        <button type="submit" class="btn btn-register">
+          <i class="fas fa-user-plus me-2"></i> Create Account
+        </button>
+
+        <div class="divider">OR</div>
+          <a href="{% provider_login_url 'google' %}" class="btn btn-outline-dark w-100 mb-3">
+            <i class="fab fa-google me-2"></i> Login with Google
+          </a>
+
+        {% provider_login_url 'google' as google_login_url %}
+                            
+        
+        <div class="text-center mt-3">
+          <span class="login-text">Already have an account?</span>
+          <a href="{% url 'login_page' %}" class="login-link">Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Password matching check (optional enhancement)
+    document.querySelector('form').addEventListener('submit', function (e) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match.');
+      }
+    });
+  </script>
+  <div class="form-messages">
+    {% if messages %}
+        {% for message in messages %}
+            <div style="
+                background-color: #1e1e1e;
+                color: #ffffff;
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 10px;
+                box-shadow: 0 0 10px rgba(255,255,255,0.1);
+                font-weight: 500;
+            ">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+  </div>
+
+
+</body>
+</html>

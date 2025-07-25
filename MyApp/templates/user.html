@@ -1,0 +1,487 @@
+    {% include "navbar.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user }} - Profile | Blogz</title>
+    <style>
+        :root {
+            /* Light theme colors */
+            --primary-color: #89A8B2;
+            --secondary-color: #B3C8CF;
+            --accent-color: #E5E1DA;
+            --background-color: #F1F0E8;
+            --text-color: #2c3e50;
+            --text-light: #666;
+            --border-color: #ddd;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3a3a3a;
+            --background-color: #1a1a1a;
+            --text-color: #ecf0f1;
+            --text-light: #bdc3c7;
+            --border-color: #4a4a4a;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --card-bg: rgba(42, 42, 42, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: 90px auto 40px;
+            padding: 0 20px;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .profile-info {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            border: 4px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .profile-details {
+            display: flex;
+            flex: 1;
+            color: white;
+        }
+        .inner-box{
+            margin-left: auto;
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Blog Topics Section */
+        .section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topics-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .topic-tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .topic-tag:hover::before {
+            left: 100%;
+        }
+
+        .topic-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(137, 168, 178, 0.4);
+        }
+
+        /* Blogs Grid */
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .blog-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .blog-title {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .blog-title:hover {
+            color: var(--primary-color);
+        }
+
+        .blog-meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-message {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .empty-submessage {
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-container {
+                margin-top: 140px;
+                padding: 0 15px;
+            }
+
+            .profile-header {
+                padding: 30px 25px;
+            }
+
+            .profile-info {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+
+            .profile-name {
+                font-size: 2rem;
+            }
+
+            .profile-stats {
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .stat-item {
+                padding: 10px 15px;
+            }
+
+            .blogs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-header {
+                padding: 25px 20px;
+            }
+
+            .profile-name {
+                font-size: 1.8rem;
+            }
+
+            .profile-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .stat-item {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .topics-container {
+                justify-content: center;
+            }
+        }
+
+        /* Loading Animation */
+        .section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .blog-title:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    
+    
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="profile-avatar">
+                </div>
+               
+
+                <div class="profile-details">
+                    <div class="inner-box">
+                    <h1 class="profile-name" >{{ current_user.username }}</h1>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">{{ num_blogs }}</span>
+                            <span class="stat-label">Blog{{ num_blogs|pluralize }}</span>
+                        </div>
+                        
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+<div class="section">
+    {% if request.user.is_authenticated and request.user.username == current_user.username %}
+        <h2>Details : </h2> 
+        <h2>Name : {{ user.username }}</h2>
+        <h2>Email : {{user}}</h2>
+        <a href="{% url 'forgot_password' %}" style="text-decoration: none; color:#FF6347;">
+            🔒 Password Reset
+        </a>
+    {% endif %}
+</div>
+
+ 
+
+        <!-- Blog Topics Section -->
+        {% if blog_topics %}
+        <div class="section">
+            <h2 class="section-title">
+                🏷️ Blog Topics
+            </h2>
+            <div class="topics-container">
+                {% for topic in blog_topics %}
+                    <span class="topic-tag">{{ topic }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Blogs Section -->
+        <div class="section">
+            <h2 class="section-title" style="color: #3CB371;">
+                📝 Published Blogs
+            </h2>
+            
+            {% if blogs %}
+                <div class="blogs-grid">
+                    {% for blog in blogs %}
+                        <div class="blog-card">
+                            <a href="{% url 'blog_body' blog.id %}" class="blog-title">
+                                {{ blog.name }}
+                            </a>
+                            <div class="blog-meta">
+                                <span>📅 {{ blog.created|date:"M d, Y"|default:"Recent" }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📝</div>
+                    <div class="empty-message">No blogs published yet</div>
+                    <div class="empty-submessage">{{ user }} hasn't shared any blogs with the community.</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Load theme if available
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+            }
+        });
+
+        // Add staggered animation to blog cards
+        const blogCards = document.querySelectorAll('.blog-card');
+        blogCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.classList.add('fadeIn');
+        });
+    </script>
+    {% include "footer.html" %}
+</body>
+</html>

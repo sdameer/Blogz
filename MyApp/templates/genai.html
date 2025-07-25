@@ -1,0 +1,359 @@
+{% include "navbar.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI SEO Title Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a1a;
+      min-height: 100vh;
+      padding: 20px;
+      color: #ffffff;
+    }
+
+    .container {
+      background: #2a2a2a;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid #3a3a3a;
+    }
+
+    .main-heading {
+      color: #ffffff;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .sub-heading {
+      color: #b0b0b0;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .form-container {
+      margin-bottom: 30px;
+    }
+
+    .search-wrapper {
+      margin-bottom: 25px;
+    }
+
+    #title {
+      width: 100%;
+      padding: 18px 24px;
+      font-size: 1.1rem;
+      border: 2px solid #3a3a3a;
+      border-radius: 12px;
+      outline: none;
+      background: #1a1a1a;
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    #title:focus {
+      border-color: #4a9eff;
+      background: #222222;
+    }
+
+    #title::placeholder {
+      color: #666666;
+    }
+
+    .generate-btn {
+      background: #4a9eff;
+      color: #ffffff;
+      border: none;
+      padding: 18px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .generate-btn:hover {
+      background: #3a8eef;
+      transform: translateY(-1px);
+    }
+
+    .result-section {
+      margin-top: 30px;
+      padding: 25px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      border: 1px solid #3a3a3a;
+      min-height: 80px;
+      position: relative;
+    }
+
+    .result-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+    }
+
+    .result-text {
+      color: #ffffff;
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1.5;
+      word-break: break-word;
+      text-align: center;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #4a9eff;
+      color: #ffffff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+
+    .result-section:hover .copy-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .copy-btn:hover {
+      background: #3a8eef;
+    }
+
+    .copy-btn.copied {
+      background: #28a745;
+    }
+
+    .back-btn {
+      background: #4a9eff;
+      color: #ffffff;
+      border: none;
+      padding: 14px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 30px auto 0;
+    }
+
+    .back-btn:hover {
+      background: #3a8eef;
+      transform: translateY(-1px);
+    }
+
+    .back-icon {
+      font-size: 1.2rem;
+    }
+
+    .icon {
+      margin-right: 10px;
+      font-size: 1.5rem;
+    }
+
+    .usage-note {
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 0 auto 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .note-icon {
+      font-size: 1.2rem;
+    }
+
+    .note-text {
+      color: #b0b0b0;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    .highlight {
+      color: #4a9eff;
+      font-weight: 700;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #3a3a3a;
+      border-radius: 50%;
+      border-top-color: #4a9eff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+        margin: 10px;
+      }
+
+      .main-heading {
+        font-size: 1.8rem;
+      }
+
+      #title, .generate-btn {
+        padding: 15px 20px;
+      }
+
+      .copy-btn {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <div class="usage-note">
+      <div class="note-icon">⚠️</div>
+      <p class="note-text">
+        <strong>Usage Limit:</strong> You can use this feature only <span class="highlight">3 times</span> due to limited API requests. Use them wisely!
+      </p>
+    </div>
+
+    <div class="container">
+      <h1 class="main-heading">
+        <span class="icon">🚀</span>
+        Generate SEO-Friendly AI Titles
+      </h1>
+      <p class="sub-heading">
+        Enter your topic name and get professionally crafted, search-engine optimized titles instantly
+      </p>
+      <br>
+      <p class="sub-heading">After clicking generat please wait ....</p>
+      <br>
+      <div class="form-container">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="search-wrapper">
+            <input type="search" name="title" id="title" placeholder="Enter your topic (e.g., Digital Marketing, Web Design, AI Tools...)" required />
+          </div>
+          <button type="submit" class="generate-btn">
+            <span class="icon">✨</span>
+            Generate Title
+          </button>
+        </form>
+      </div>
+
+      <div class="result-section">
+        {% if answer %}
+        <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+        <div class="result-content">
+          <h2 class="result-text" id="generated-title">{{answer}}</h2>
+        </div>
+        {% else %}
+        <div class="result-content">
+          <p class="result-text" style="color: #666666; font-style: italic;">
+            Your AI-generated SEO title will appear here...
+          </p>
+        </div>
+        {% endif %}
+      </div>
+
+      <button onclick="goBack()" class="back-btn">
+        <span class="back-icon">←</span>
+        Back
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('title').addEventListener('input', function () {
+      this.style.borderColor = this.value.length > 0 ? '#4a9eff' : '#3a3a3a';
+    });
+
+    document.querySelector('form').addEventListener('submit', function () {
+      const button = document.querySelector('.generate-btn');
+      const originalText = button.innerHTML;
+      button.innerHTML = '<span class="loading"></span> Generating...';
+      button.disabled = true;
+
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.disabled = false;
+      }, 3000);
+    });
+
+    function copyToClipboard() {
+      const titleElement = document.getElementById('generated-title');
+      const copyBtn = document.querySelector('.copy-btn');
+      
+      if (titleElement) {
+        const titleText = titleElement.textContent;
+        
+        navigator.clipboard.writeText(titleText).then(function() {
+          copyBtn.textContent = '✅ Copied!';
+          copyBtn.classList.add('copied');
+          
+          setTimeout(() => {
+            copyBtn.textContent = '📋 Copy';
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        }).catch(function(err) {
+          const textArea = document.createElement('textarea');
+          textArea.value = titleText;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          
+          copyBtn.textContent = '✅ Copied!';
+          copyBtn.classList.add('copied');
+          
+          setTimeout(() => {
+            copyBtn.textContent = '📋 Copy';
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        });
+      }
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>

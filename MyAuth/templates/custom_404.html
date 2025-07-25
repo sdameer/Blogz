@@ -1,0 +1,46 @@
+{% include "navbar.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rate Limit Exceeded</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0d0d0d;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .error-box {
+      background-color: #1a1a1a;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .error-box h1 {
+      font-size: 30px;
+      color: #ff5555;
+      margin-bottom: 15px;
+    }
+
+    .error-box h2 {
+      font-size: 20px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-box">
+    <h1>404 ! </h1>
+    <h2>Page not Found</h2>
+  </div>
+</body>
+</html>

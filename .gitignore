@@ -1,0 +1,22 @@
+# Bytecode
+__pycache__/
+*.py[cod]
+
+# SQLite DB
+db.sqlite3
+
+# Env variables
+.env
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

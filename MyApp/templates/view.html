@@ -1,0 +1,444 @@
+{% load static %}
+{% include "navbar.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ blog.name }} - Blogz</title>
+    <style>
+        :root {
+            /* Light theme colors */
+            --primary-color: #89A8B2;
+            --secondary-color: #B3C8CF;
+            --accent-color: #E5E1DA;
+            --background-color: #F1F0E8;
+            --text-color: #2c3e50;
+            --text-light: #666;
+            --border-color: #ddd;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --card-bg: rgba(255, 255, 255, 0.8);
+        }
+
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3a3a3a;
+            --background-color: #1a1a1a;
+            --text-color: #ecf0f1;
+            --text-light: #bdc3c7;
+            --border-color: #4a4a4a;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --card-bg: rgba(42, 42, 42, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 90px auto 40px;
+            padding: 0 20px;
+        }
+
+        .blog-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .blog-image-container {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-image:hover {
+            transform: scale(1.05);
+        }
+
+        .blog-info {
+            padding: 30px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+        }
+
+        .blog-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .author-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .author-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .blog-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .update-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .update-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .delete-btn {
+            background-color: transparent;
+            color: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .delete-btn:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .blog-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .blog-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .blog-body h1, .blog-body h2, .blog-body h3 {
+            margin: 20px 0 15px;
+            color: var(--primary-color);
+        }
+
+        .blog-body p {
+            margin-bottom: 15px;
+        }
+
+        .comments-section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .comments-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .comment-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(137, 168, 178, 0.2);
+        }
+
+        .comment-submit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .comment-submit:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .comment-card {
+            background: var(--accent-color);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .comment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment-user {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .comment-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .comment-body {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .delete-comment {
+            background-color: transparent;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+            padding: 5px 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .delete-comment:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            border: none;
+            margin: 30px 0;
+        }
+
+        .no-image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                margin-top: 140px;
+                padding: 0 15px;
+            }
+
+            .blog-title {
+                font-size: 2rem;
+            }
+
+            .blog-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .blog-actions {
+                align-self: stretch;
+            }
+
+            .action-btn {
+                flex: 1;
+                text-align: center;
+            }
+
+            .comment-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .comment-submit {
+                align-self: center;
+                width: fit-content;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-info, .blog-content, .comments-section {
+                padding: 20px;
+            }
+
+            .blog-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="main-container">
+        <!-- Blog Header with Image and Title -->
+        <div class="blog-header">
+            {% if blog.image %}
+                <div class="blog-image-container">
+                    <img src="{{ blog.image.url }}" alt="{{ blog.name }}" class="blog-image">
+                </div>
+            {% else %}
+                <div class="no-image-placeholder">
+                    📝
+                </div>
+            {% endif %}
+            
+            <div class="blog-info">
+                <h1 class="blog-title">{{ blog.name }}</h1>
+                
+                <div class="blog-meta">
+                    <a href="{% url 'user' blog.user.id %}" class="author-link" style="color: #3CB371;">
+                        👤 {{ blog.user.username }}
+                    </a>
+                    
+                    {% if request.user == blog.user %}
+                        <div class="blog-actions">
+                            <a href="{% url 'update_blog' blog.id %}" class="action-btn update-btn">✏️ Edit</a>
+                            <a href="{% url 'delete_blog' blog.id %}" class="action-btn delete-btn">🗑️ Delete</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Content -->
+        <div class="blog-content">
+            <div class="blog-body">{{ blog.body|safe }}</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <h2 class="comments-title">💬 Comments</h2>
+            
+            {% if request.user.is_authenticated %}
+                <form action="" method="POST" class="comment-form">
+                    {% csrf_token %}
+                    <input type="text" name="msg" id="msg" class="comment-input" placeholder="Share your thoughts...">
+                    <button type="submit" class="comment-submit">Post Comment</button>
+                </form>
+            {% else %}
+                <p style="text-align: center; color: var(--text-light); margin-bottom: 20px;">
+                    Please <a href="{% url 'login_page' %}" style="color: var(--primary-color);">login</a> to leave a comment.
+                </p>
+            {% endif %}
+
+            {% for m in message %}
+                <div class="comment-card">
+                    <br><br>
+                    {% if request.user == m.user %}
+                        <a href="{% url 'delete_msg' m.id %}" class="delete-comment">Delete</a>
+                    {% endif %}
+                    
+                    <div class="comment-header">
+                        <a href="{% url 'user' m.user.id %}">
+                        <span class="comment-user" style="color: #007ACC;">@{{ m.user.username }}</span>
+                        </a>
+
+                        <span class="comment-date">{{ m.created|date:"M d, Y - H:i" }}</span>
+                    </div>
+                    
+                    <div class="comment-body">{{ m.body }}</div>
+                </div>
+            {% empty %}
+                <p style="text-align: center; color: var(--text-light); font-style: italic;">
+                    No comments yet. Be the first to share your thoughts!
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+        {% include "footer.html" %}
+
+</body>
+</html>

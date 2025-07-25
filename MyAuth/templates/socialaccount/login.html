@@ -1,0 +1,69 @@
+{% include "navbar.html" %}
+{% load socialaccount %}
+{% load static %}
+
+{% block content %}
+<style>
+  .login-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-box {
+    background-color: var(--bs-dark, #1e1e2f);
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .google-btn {
+    background-color: white;
+    color: #444;
+    border: none;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .google-btn:hover {
+    background-color: #e6e6e6;
+    transform: scale(1.03);
+  }
+
+  .google-btn img {
+    height: 20px;
+  }
+</style>
+<form action="" method="POST">
+  {% csrf_token %}
+<div class="login-container">
+  <div class="login-box">
+    <h2>Google</h2>
+    <br>
+
+    <h5 class="mb-4">Click below to continue with your Google account.</h5>
+    <br>
+    <button type="submit" style="border: hidden; border-radius: 10px; width: 150px; height: 40px;">
+    
+      <h4>Sign in with Google</h4>
+
+    
+      </button>
+      <br><br>
+      <h5>Please wait this may take few seconds.....</h5>
+  </div>
+</div>
+</form>
+
+{% endblock %}

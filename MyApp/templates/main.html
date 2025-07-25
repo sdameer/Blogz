@@ -1,0 +1,683 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Light theme colors */
+            --primary-color: #89A8B2;
+            --secondary-color: #B3C8CF;
+            --accent-color: #E5E1DA;
+            --background-color: #F1F0E8;
+            --text-color: #2c3e50;
+            --text-light: #666;
+            --border-color: #ddd;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-info-bg: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(229,225,218,0.3));
+            --footer-bg: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            --footer-text: #2c3e50;
+            --footer-link: #1a1a1a;
+            --footer-link-hover: white;
+        }
+
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --primary-color: #6B9AC4;
+            --secondary-color: #5A8DB0;
+            --accent-color: #4A4A4A;
+            --background-color: #1a1a1a;
+            --text-color: #ecf0f1;
+            --text-light: #bdc3c7;
+            --border-color: #4a4a4a;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --card-bg: rgba(42, 42, 42, 0.9);
+            --card-info-bg: linear-gradient(to bottom, rgba(42,42,42,0.95), rgba(60,60,60,0.3));
+            --footer-bg: linear-gradient(135deg, #2a2a2a 0%, var(--accent-color) 100%);
+            --footer-text: #ecf0f1;
+            --footer-link: #bdc3c7;
+            --footer-link-hover: var(--primary-color);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+            gap: 0;
+            padding: 0;
+            flex: 1;
+        }
+        
+        /* Topics Section - 25% */
+        .topics-section {
+            width: 25%;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            padding: 1.5rem 1rem;
+            border-right: 3px solid var(--primary-color);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .topics-header {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .topic-item {
+            display: block;
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-decoration: none;
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+            border-left: 4px solid transparent;
+            font-size: 0.9rem;
+        }
+        
+        .topic-item:hover {
+            color: white;
+            background-color: var(--primary-color);
+            transform: translateX(5px);
+            border-left: 4px solid var(--background-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .topic-divider {
+            border: none;
+            height: 1px;
+            background-color: var(--border-color);
+            opacity: 0.3;
+            margin: 0.5rem 0;
+        }
+        
+        /* Blogs Section - 75% */
+        .blogs-section {
+            width: 75%;
+            padding: 2rem;
+            background-color: var(--background-color);
+            overflow-y: auto;
+        }
+        
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .blog-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 450px;
+        }
+        
+        .blog-card-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+
+        }
+        
+        .blog-image-container {
+            height: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blog-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+        
+        .blog-info {
+            height: 40%;
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: var(--card-info-bg);
+        }
+        
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(137, 168, 178, 0.25);
+            border-color: var(--primary-color);
+        }
+        
+        [data-theme="dark"] .blog-card:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .blog-title {
+            font-size: 1.4rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .blog-link {
+            display: inline-block;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(137, 168, 178, 0.3);
+        }
+        
+        .blog-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(137, 168, 178, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+        
+        [data-theme="dark"] .blog-link:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .blog-meta {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            line-height: 1.4;
+        }
+        
+        .blog-meta a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .blog-meta a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .blog-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: auto;
+            align-items: center;
+        }
+        
+        .action-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid var(--primary-color);
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            flex: 1;
+            text-align: center;
+            background-color: var(--card-bg);
+        }
+        
+        .action-link:hover {
+            color: white;
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .action-link.delete:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        /* Fixed Pagination Styles */
+        .fixed-pagination {
+            position: sticky;
+            bottom: 0;
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            margin-top: 2rem;
+            border-top: 2px solid var(--primary-color);
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 -4px 15px rgba(137, 168, 178, 0.15);
+        }
+
+        .pagination .page-link {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 0.8rem 1.2rem;
+            margin: 0 0.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination .page-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(137, 168, 178, 0.3);
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background-color: var(--accent-color);
+            border-color: var(--border-color);
+            color: var(--text-light);
+            opacity: 0.6;
+        }
+        
+        /* Footer Styles */
+        .custom-footer {
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 2.5rem 0 1.5rem 0;
+            margin-top: auto;
+            border-top: 3px solid var(--primary-color);
+            box-shadow: 0 -4px 15px rgba(137, 168, 178, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .custom-footer {
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h5 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            color: var(--footer-link);
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            margin: 0.3rem 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid transparent;
+            font-weight: 500;
+        }
+
+        [data-theme="dark"] .footer-link {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-link:hover {
+            color: var(--footer-link-hover);
+            background-color: var(--primary-color);
+            transform: translateX(8px);
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(137, 168, 178, 0.3);
+            text-decoration: none;
+        }
+
+        [data-theme="dark"] .footer-link:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            color: white;
+        }
+
+        .footer-link i {
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+            min-width: 20px;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            margin: 1.5rem 0;
+            opacity: 0.6;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(137, 168, 178, 0.2);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .footer-brand {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-description {
+            color: var(--footer-text);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .footer-section {
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .footer-section {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .footer-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(137, 168, 178, 0.15);
+        }
+
+        [data-theme="dark"] .footer-section:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Dark mode specific adjustments */
+        [data-theme="dark"] .topics-section {
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        [data-theme="dark"] .blog-image-container {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)) !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .topics-section, 
+            .blogs-section {
+                width: 100%;
+            }
+            
+            .topics-section {
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 3px solid var(--primary-color);
+            }
+            
+            .blogs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-card {
+                height: 10px;
+            }
+            
+            .blog-card-content {
+                flex-direction: column;
+            }
+            
+            .blog-image-container {
+                height: 200px;
+            }
+            
+            .blog-info {
+                height: auto;
+            }
+            
+            .blog-title {
+                font-size: 1.2rem;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-content {
+                padding: 0 1rem;
+            }
+
+            .custom-footer {
+                padding: 2rem 0 1rem 0;
+            }
+
+            .footer-link {
+                justify-content: center;
+            }
+
+            .footer-section h5 {
+                text-align: center;
+                width: 100%;
+            }
+
+            .fixed-pagination {
+                padding: 0.8rem 1rem;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        .topics-section::-webkit-scrollbar,
+        .blogs-section::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .topics-section::-webkit-scrollbar-track,
+        .blogs-section::-webkit-scrollbar-track {
+            background: var(--accent-color);
+        }
+        
+        .topics-section::-webkit-scrollbar-thumb,
+        .blogs-section::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .topics-section::-webkit-scrollbar-thumb:hover,
+        .blogs-section::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    {% include "navbar.html" %}
+    
+    <div class="main-container">
+        <!-- Topics Section - 25% -->
+        <div class="topics-section">
+            <h5 class="topics-header" style="color: #708090;">
+                <i class="bi bi-tags-fill me-2"></i>Topics
+            </h5>
+            <a href="{% url 'home' %}" class="topic-item">
+                    <i class="bi bi-arrow-right-circle me-2"></i>All
+                </a>
+            {% for topic in topics %}
+                <a href="{% url 'home' %}?q={{ topic }}" class="topic-item">
+                    <i class="bi bi-arrow-right-circle me-2"></i>{{ topic }}
+                </a>
+                <hr class="topic-divider">
+            {% endfor %}
+        </div>
+        
+        <!-- Blogs Section - 75% -->
+        <div class="blogs-section">
+            <div class="blogs-grid">
+                {% for i in blog %}
+                    <div class="blog-card">
+                        <div class="blog-card-content">
+                            <!-- Image Section - 60% -->
+                            {% if i.image %}
+    <div class="blog-image-container">
+        <img src="{{ i.image.url }}" alt="Image for {{ i.name }}" class="blog-image">
+    </div>
+{% else %}
+    <div class="blog-image-container" style="background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); display: flex; align-items: center; justify-content: center;">
+        <i class="bi bi-image" style="font-size: 3rem; color: white; opacity: 0.7;"></i>
+    </div>
+{% endif %}
+
+                            
+                            <!-- Content Section - 40% -->
+                            <div class="blog-info">
+                                <div>
+                                    <h3 class="blog-title">{{ i.name|truncatewords:4  }}</h3>
+                                    
+                                    <a href="{% url 'blog_body' i.id %}" class="blog-link">
+                                        <i class="bi bi-book me-1"></i>Read More
+                                    </a>
+                                    
+                                    <div class="blog-meta">
+                                        <i class="bi bi-person-circle"></i>
+                                        <a href="{% url 'user' i.user.id %}" style="color: #708090;">{{ i.user.username }}</a>
+                                        <i class="bi bi-calendar-event ms-2"></i>
+                                        <span>{{ i.created|date:"M d, Y" }}</span>
+                                    </div>
+                                </div>
+                                
+                                {% if request.user == i.user %}
+                                    <div class="blog-actions">
+                                        <a href="{% url 'update_blog' i.id %}" class="action-link" style="color: #708090;" >
+                                            <i class="bi bi-pencil me-1"></i>Edit
+                                        </a>
+                                        <a href="{% url 'delete_blog' i.id %}" class="action-link delete" style="color: #708090;">
+                                            <i class="bi bi-trash me-1"></i>Delete
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if page_obj %}
+                <nav class="fixed-pagination">
+                    <ul class="pagination justify-content-center mb-0">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled" style="color: #708090;">
+                                <span class="page-link">Previous</span>
+                            </li>
+                        {% endif %}
+
+                        <li class="page-item disabled" style="color: #708090;">
+                            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                        </li>
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item" style="color: #708090;">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">Next</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+    {% include "footer.html" %}
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

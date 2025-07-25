@@ -1,0 +1,317 @@
+    {% include "navbar.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Confirmation - Blogz</title>
+    <style>
+        :root {
+            /* Light theme colors */
+            --primary-color: #89A8B2;
+            --secondary-color: #B3C8CF;
+            --accent-color: #E5E1DA;
+            --background-color: #F1F0E8;
+            --text-color: #2c3e50;
+            --text-light: #666;
+            --border-color: #ddd;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --success-color: #27ae60;
+            --success-hover: #219a52;
+        }
+
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3a3a3a;
+            --background-color: #1a1a1a;
+            --text-color: #ecf0f1;
+            --text-light: #bdc3c7;
+            --border-color: #4a4a4a;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --card-bg: rgba(42, 42, 42, 0.9);
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --success-color: #27ae60;
+            --success-hover: #219a52;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 70px;
+        }
+
+        .delete-container {
+            
+            max-width: 500px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .delete-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 2px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .delete-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--danger-color), #ff6b6b, var(--danger-color));
+        }
+
+        .warning-icon {
+            font-size: 4rem;
+            color: var(--danger-color);
+            margin-bottom: 20px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .delete-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .delete-message {
+        
+            font-size: 1.1rem;
+            color: #FF6347;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .object-name {
+            background: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #708090;
+            display: inline-block;
+            margin: 0 5px;
+            border: 1px solid var(--border-color);
+        }
+
+        .warning-text {
+            
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--danger-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            color: var(--danger-color);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .btn-delete {
+            background-color: var(--danger-color);
+            color: white;
+            border: 2px solid var(--danger-color);
+        }
+
+        .btn-delete:hover {
+            background-color: var(--danger-hover);
+            border-color: var(--danger-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-cancel {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-cancel:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .delete-form {
+            width: 100%;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 140px;
+            }
+            
+            .delete-card {
+                padding: 30px 25px;
+                margin: 20px;
+            }
+
+            .delete-title {
+                font-size: 1.5rem;
+            }
+
+            .warning-icon {
+                font-size: 3rem;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .delete-card {
+                padding: 25px 20px;
+            }
+
+            .delete-title {
+                font-size: 1.3rem;
+            }
+
+            .delete-message {
+                font-size: 1rem;
+            }
+        }
+
+        /* Animation for the entire card */
+        .delete-card {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(137, 168, 178, 0.3);
+        }
+
+        .btn-delete:focus {
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="delete-container">
+        <div class="delete-card">
+            <div class="warning-icon">⚠️</div>
+            
+            <h1 class="delete-title">Confirm Deletion</h1>
+            
+            <p class="delete-message">
+                Are you sure you want to delete<br>
+                <span class="object-name">"{{ object }}"</span>?
+            </p>
+            
+            <div class="warning-text">
+                ⚠️ This action cannot be undone. The item will be permanently removed.
+            </div>
+            
+            <form action="" method="POST" class="delete-form">
+                {% csrf_token %}
+                <div class="button-container">
+                    <button type="submit" class="btn btn-delete">
+                        🗑️ Yes, Delete
+                    </button>
+                    <a href="javascript:history.back()" class="btn btn-cancel">
+                        ← Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Add confirmation before deletion
+        document.querySelector('.btn-delete').addEventListener('click', function(e) {
+            const objectName = '{{ object }}';
+            if (!confirm(`Are you absolutely sure you want to delete "${objectName}"? This cannot be undone.`)) {
+                e.preventDefault();
+            }
+        });
+
+        // Load theme if available
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+            }
+        });
+    </script>
+        
+
+</body>
+</html>

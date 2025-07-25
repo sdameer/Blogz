@@ -1,0 +1,329 @@
+{% include "navbar.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        :root {
+            /* Light theme colors */
+            --primary: #89A8B2;
+            --secondary: #B3C8CF;
+            --accent: #E5E1DA;
+            --background: #F1F0E8;
+            --text-primary: #2c3e50;
+            --text-secondary: #5d6d7e;
+            --border: #d4d6d8;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --success: #27ae60;
+            --error: #e74c3c;
+        }
+
+        /* Dark theme colors - add this class to body when dark mode is active */
+        body.dark-mode {
+            --primary: #89A8B2;
+            --secondary: #B3C8CF;
+            --accent: #3a3a3a;
+            --background: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border: #404040;
+            --shadow: rgba(255, 255, 255, 0.1);
+            --success: #2ecc71;
+            --error: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-form-wrapper {
+            background: var(--accent);
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form-wrapper:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: var(--background);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(137, 168, 178, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .issues-textarea {
+            min-height: 150px;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(137, 168, 178, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .success {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        .required {
+            color: var(--error);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .contact-form-wrapper {
+                padding: 2rem;
+            }
+
+            .form-header h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="contact-form-wrapper">
+            <div class="form-header">
+                <h1>Report Issue</h1>
+                <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            </div>
+
+    
+
+            <form method="post" action="{% url 'contact_us' %}" id="contactForm">
+                {% csrf_token %}
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required maxlength="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required maxlength="254">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject <span class="required">*</span></label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a subject</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="support">Technical Support</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="feature">Feature Request</option>
+                        <option value="billing">Billing Issue</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message <span class="required">*</span></label>
+                    <textarea id="message" name="message" placeholder="Please describe your inquiry..." required maxlength="2000"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="issues">Specific Issues/Details</label>
+                    <textarea id="issues" name="issues" class="issues-textarea" placeholder="If you're reporting a bug or issue, please provide detailed information including steps to reproduce, error messages, browser/device info, etc." maxlength="5000"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Form submission handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading"></span>Sending...';
+        });
+
+        // Auto-resize textarea
+        const textareas = document.querySelectorAll('textarea');
+        textareas.forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 300) + 'px';
+            });
+        });
+
+        // Form validation feedback
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && !this.value.trim()) {
+                    this.style.borderColor = 'var(--error)';
+                } else {
+                    this.style.borderColor = 'var(--border)';
+                }
+            });
+
+            input.addEventListener('input', function() {
+                if (this.style.borderColor === 'rgb(231, 76, 60)') {
+                    this.style.borderColor = 'var(--border)';
+                }
+            });
+        });
+    </script>
+        {% include "footer.html" %}
+
+</body>
+</html>

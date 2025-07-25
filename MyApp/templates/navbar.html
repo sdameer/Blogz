@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogz Navbar</title>
+    <style>
+        :root {
+            /* Light theme colors */
+            --primary-color: #89A8B2;
+            --secondary-color: #B3C8CF;
+            --accent-color: #E5E1DA;
+            --background-color: #F1F0E8;
+            --text-color: #2c3e50;
+            --text-light: #666;
+            --border-color: #ddd;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3a3a3a;
+            --background-color: #1a1a1a;
+            --text-color: #ecf0f1;
+            --text-light: #bdc3c7;
+            --border-color: #4a4a4a;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--background-color);
+            border-bottom: 2px solid var(--primary-color);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 70px;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--secondary-color);
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--accent-color);
+            border-radius: 25px;
+            padding: 8px 15px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .search-container:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(137, 168, 178, 0.2);
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 8px 12px;
+            color: var(--text-color);
+            font-size: 14px;
+            width: 300px;
+            transition: width 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .search-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .theme-toggle {
+            background-color: var(--accent-color);
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            padding: 8px 12px;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .user-greeting {
+            color: var(--text-color);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-link.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .nav-link.primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-link.secondary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .nav-link.secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Secondary navbar for authenticated users */
+        .secondary-nav {
+            background-color: var(--accent-color);
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 70px;
+        }
+
+        .secondary-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .add-blog-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .add-blog-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                height: auto;
+                padding: 15px 0;
+                gap: 15px;
+            }
+
+            .navbar-left {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+
+            .search-input {
+                width: 250px;
+            }
+
+            .navbar-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .secondary-nav {
+                margin-top: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-input {
+                width: 200px;
+            }
+
+            .navbar {
+                padding: 0 10px;
+            }
+        }
+
+        /* Content spacing to account for fixed navbar */
+        .content {
+            margin-top: 70px;
+            padding: 20px;
+        }
+
+        /* Dark mode icon styles */
+        .theme-icon {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <!-- Website Name -->
+                <a href="{% url 'home' %}" class="logo" style="color: #FF8C42;">Blogz</a>
+                
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <form action="{% url 'home' %}" method="POST" style="display: flex; align-items: center; width: 100%;">
+                        {% csrf_token %}
+                        <input type="text" name="q" id="q" class="search-input" placeholder="Search blogs..."/>
+                        <button type="submit" class="search-btn">Search</button>
+                    </form>
+                </div>
+                
+                <!-- Add Blog Button for authenticated users -->
+                {% if user.is_authenticated %}
+                <a href="{% url 'add_blog' %}" class="nav-link primary">✏️ Add Blog</a>
+                &nbsp;&nbsp;
+                {% endif %}
+            </div>
+            
+            <div class="navbar-right">
+                <!-- Dark Mode Toggle -->
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span class="theme-icon" id="themeIcon">🌙</span>
+                    <span id="themeText"></span>
+                </button>
+
+                <!-- User Section -->
+                <div class="user-section">
+                    {% if user.is_authenticated %}
+                        <div class="user-icon">{{ user.username|first|upper }}</div>
+                        <span class="user-greeting">Hello, {{ user.username }}!</span>
+                        <div class="nav-links">
+                            <a href="{% url 'logout_page' %}" class="nav-link secondary">Logout</a>
+                        </div>
+                    {% else %}
+                        <div class="user-icon">?</div>
+                        <div class="nav-links">
+                            <a href="{% url 'login_page' %}" class="nav-link primary">Login</a>
+                            <a href="{% url 'register_page' %}" class="nav-link secondary">Register</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+<br><br><br>
+
+
+
+
+
+    <script>
+        // Dark mode toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+    
+            }
+        });
+    </script>
+</body>
+</html>
