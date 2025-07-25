@@ -235,16 +235,24 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
 ]
 
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_SIGNUP_FIELDS = ["email"]
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ['username', 'email', 'password1', 'password2']
 
-ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1', 'password2']
+ # email-based login
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
+ # social login - Google
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_ADAPTER = 'MyAuth.adapter.CustomSocialAccountAdapter'
+
+
+
+# ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1', 'password2']
+# ACCOUNT_UNIQUE_EMAIL = True
+# SOCIALACCOUNT_QUERY_EMAIL = True
+# SOCIALACCOUNT_AUTO_SIGNUP = True
+# SOCIALACCOUNT_ADAPTER = 'MyAuth.adapter.CustomSocialAccountAdapter'
 
 
 
