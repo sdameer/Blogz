@@ -31,7 +31,7 @@ class Blog(models.Model):
 
 class Message(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE,)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE,default=1)
     body = models.TextField(max_length=300)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
