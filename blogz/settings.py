@@ -30,8 +30,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS =['blogz-django.onrender.com']
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS =['blogz-django.onrender.com',
+    "localhost",
+    "127.0.0.1"
+]
 
 
 # Application definition
@@ -65,6 +67,9 @@ SITE_ID = 1
 CORS_ALLOW_ALL_ORIGINS = True  # For development only!
 
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://blogz-django.onrender.com",
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
