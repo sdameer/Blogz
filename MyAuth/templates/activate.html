@@ -86,7 +86,8 @@
     }
 
     if (uid && token) {
-      fetch('http://127.0.0.1:8000/auth/users/activation/', {
+        fetch('https://blogz-django.onrender.com/auth/users/activation/', {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
