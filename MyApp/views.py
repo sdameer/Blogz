@@ -34,7 +34,10 @@ def post(request):
             blog = form.save(commit=False)
             blog.user = request.user
             blog.save()
-            print("Image saved to:", blog.image.path)
+            if blog.image:
+                print("Image saved to:", blog.image.path)
+            else:
+                print("No image uploaded.")
 
 
             return redirect('home')
