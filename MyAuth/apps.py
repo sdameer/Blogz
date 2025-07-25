@@ -4,7 +4,7 @@ from django.db.utils import OperationalError, ProgrammingError
 
 class MyauthConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'myauth'
+    name = 'MyAuth'
 
     def ready(self):
         try:
