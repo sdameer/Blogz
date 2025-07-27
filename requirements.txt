@@ -62,3 +62,5 @@ urllib3==2.5.0
 websockets==15.0.1
 whitenoise
 python-dotenv
+dj-database-url
+psycopg2-binary
