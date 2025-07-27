@@ -4,7 +4,7 @@ User = get_user_model()
 
 email = "admin@gmail.com"
 username = "admin"
-password = "admin4321"
+password = "admin12345"
 
 if not User.objects.filter(email=email).exists():
     print("Creating admin user...")
