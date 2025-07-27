@@ -42,6 +42,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
 ]
 
+handler404 = 'MyAuth.views.custom_404_view'
 
 from django.conf.urls.static import static
 
@@ -49,4 +50,3 @@ from django.conf.urls.static import static
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Custom error handler
-handler404 = 'MyAuth.views.custom_404_view'
