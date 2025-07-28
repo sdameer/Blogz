@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
-
+from cloudinary.models import CloudinaryField
 from django.conf import settings
 
 
@@ -19,7 +19,9 @@ class Blog(models.Model):
     name = models.CharField(max_length=50)
     body = HTMLField()
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, name='liked_blogs', blank=True)
-    image = models.ImageField(upload_to='blog_images/',null=True , blank=True)
+    # image = models.ImageField(upload_to='blog_images/',null=True , blank=True)
+    image = CloudinaryField('image', folder='blog_images/', blank=True, null=True)
+
     
 
     created = models.DateTimeField(auto_now_add=True)

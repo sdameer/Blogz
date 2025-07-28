@@ -16,6 +16,10 @@ import os
 
 from dotenv import load_dotenv   # type: ignore
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -274,10 +278,16 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SOCIALACCOUNT_ADAPTER = 'MyAuth.adapter.CustomSocialAccountAdapter'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'djgiwof4f',
-    'API_KEY': '621652234363914',
-    'API_SECRET': '7gC8Va9u8IHsL7dWbxAQB0KecXE',
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'djgiwof4f',
+#     'API_KEY': '621652234363914',
+#     'API_SECRET': '7gC8Va9u8IHsL7dWbxAQB0KecXE',
+# }
+
+cloudinary.config( 
+  cloud_name = "djgiwof4f", 
+  api_key = "621652234363914", 
+  api_secret = "7gC8Va9u8IHsL7dWbxAQB0KecXE"
+)
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
