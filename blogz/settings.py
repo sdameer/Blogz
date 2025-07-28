@@ -62,6 +62,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'cloudinary',
+    'cloudinary_storage',
+    'django.contrib.staticfiles',
     
 ]
 
@@ -271,3 +274,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 SOCIALACCOUNT_ADAPTER = 'MyAuth.adapter.CustomSocialAccountAdapter'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'root',
+    'API_KEY': '621652234363914',
+    'API_SECRET': '7gC8Va9u8IHsL7dWbxAQB0KecXE',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
