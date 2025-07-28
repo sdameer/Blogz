@@ -34,14 +34,14 @@ def post(request):
             blog = form.save(commit=False)
             blog.user = request.user
             blog.save()
-            if blog.image:
-                print("Image saved to:", blog.image.url)
-                print("Image saved to:", blog.image.path)
-            else:
-                print("No image uploaded.")
+            # if blog.image:
+            #     print("Image saved to:", blog.image.url)
+
+            # else:
+            #     print("No image uploaded.")
 
 
-        return redirect('home')
+            return redirect('home')
     context = {'form': form, }
     return render(request, 'add_blog.html', context=context)
 
