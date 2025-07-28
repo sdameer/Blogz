@@ -35,6 +35,7 @@ def post(request):
             blog.user = request.user
             blog.save()
             if blog.image:
+                print("Image saved to:", blog.image.url)
                 print("Image saved to:", blog.image.path)
             else:
                 print("No image uploaded.")
