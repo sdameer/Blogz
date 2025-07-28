@@ -41,7 +41,7 @@ def post(request):
                 print("No image uploaded.")
 
 
-            return redirect('home')
+        return redirect('home')
     context = {'form': form, }
     return render(request, 'add_blog.html', context=context)
 
