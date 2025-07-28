@@ -600,9 +600,9 @@
                         <div class="blog-card-content">
                             <!-- Image Section - 60% -->
                             {% if i.image %}
-    <div class="blog-image-container">
-        <img src="{{ i.image.url }}" alt="Image for {{ i.name }}" class="blog-image">
-    </div>
+                                <div class="blog-image-container">
+                                <img src="{{ i.image.url }}" alt="Image for {{ i.name }}" class="blog-image">
+        </div>
 {% else %}
     <div class="blog-image-container" style="background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); display: flex; align-items: center; justify-content: center;">
         <i class="bi bi-image" style="font-size: 3rem; color: white; opacity: 0.7;"></i>
