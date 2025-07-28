@@ -275,7 +275,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 SOCIALACCOUNT_ADAPTER = 'MyAuth.adapter.CustomSocialAccountAdapter'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'root',
+    'CLOUD_NAME': 'djgiwof4f',
     'API_KEY': '621652234363914',
     'API_SECRET': '7gC8Va9u8IHsL7dWbxAQB0KecXE',
 }
