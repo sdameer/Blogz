@@ -1,5 +1,4 @@
 from django.db import models
-from .models import User
 from tinymce.models import HTMLField
 from cloudinary.models import CloudinaryField
 from django.conf import settings
