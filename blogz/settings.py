@@ -186,7 +186,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'MyAuth.User'
+AUTH_USER_MODEL = 'MyApp.User'
 
 
 REST_FRAMEWORK = {
