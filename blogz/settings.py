@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 ALLOWED_HOSTS =[
-    'blogz-cas6.onrender.com',
+    'blogz-sdameer.onrender.com',
     "localhost",
     "127.0.0.1",
 ]
@@ -76,7 +76,7 @@ CORS_ALLOW_ALL_ORIGINS = True  # For development only!
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://blogz-cas6.onrender.com",
+    "https://blogz-sdameer.onrender.com",
 ]
 
 MIDDLEWARE = [
@@ -126,10 +126,10 @@ WSGI_APPLICATION = 'blogz.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blogz_django_render',
-        'USER': 'blogz_django_render_user',
-        'PASSWORD': '92yIQZwhUNjFOlPJiIGjRpYNTeTfhaeC',
-        'HOST': 'dpg-d235cb7diees739aldv0-a',
+        'NAME': os.environ.get('POSTGRES_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_NAME_HOST'),
         'PORT': '5432'
     }
 }
@@ -211,8 +211,7 @@ DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "set-password/?uid={uid}&token={token}",
 
     'SERIALIZERS': {
-        # 'user_create': 'djoser.serializers.UserCreateSerializer',
-        # 'user': 'djoser.serializers.UserSerializer',
+       
     },
     'EMAIL': {},
     'EMAIL_CLASS': {
@@ -268,26 +267,14 @@ SOCIALACCOUNT_AUTO_SIGNUP = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1', 'password2']
-# ACCOUNT_UNIQUE_EMAIL = True
-# SOCIALACCOUNT_QUERY_EMAIL = True
-# SOCIALACCOUNT_AUTO_SIGNUP = True
-# SOCIALACCOUNT_ADAPTER = 'MyAuth.adapter.CustomSocialAccountAdapter'
-
-
 
 SOCIALACCOUNT_ADAPTER = 'MyAuth.adapter.CustomSocialAccountAdapter'
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': 'djgiwof4f',
-#     'API_KEY': '621652234363914',
-#     'API_SECRET': '7gC8Va9u8IHsL7dWbxAQB0KecXE',
-# }
 
 cloudinary.config( 
-  cloud_name = "djgiwof4f", 
-  api_key = "621652234363914", 
-  api_secret = "7gC8Va9u8IHsL7dWbxAQB0KecXE"
+  cloud_name = os.environ.get('CLOUD_NAME'), 
+  api_key =  os.environ.get('CLOUD_API_KEY'), 
+  api_secret =  os.environ.get('CLOUD_API_SECRET')
 )
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
