@@ -415,9 +415,9 @@
         <h2>Details : </h2> 
         <h2>Name : {{ user.username }}</h2>
         <h2>Email : {{user}}</h2>
-        <a href="{% url 'forgot_password' %}" style="text-decoration: none; color:#FF6347;">
-            🔒 Password Reset
-        </a>
+        <p>Bio : {{user.bio}}</p>
+        <a href="{% url 'user_profile_edit' user.id %}">Edit profile</a>
+
     {% endif %}
 </div>
 

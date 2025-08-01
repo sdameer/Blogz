@@ -13,8 +13,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 # for blogs :
-from .models import Blog, Topic, Message
-from .forms import BlogForm
+from .models import Blog, Topic, Message , User
+from .forms import BlogForm ,UserForm
 
 # for seach bar :
 from django.db.models import Q
@@ -170,7 +170,7 @@ def contact_us(request):
                 email_subject,
                 email_message,
                 settings.EMAIL_HOST_USER,
-                ['syedameerdev@example.com'],  # Replace with your email
+                ['syedameerdev@example.com'], 
                 fail_silently=False,
             )
             messages.success(request, 'Your message has been sent successfully!')
@@ -212,3 +212,19 @@ def genai_title(request):
     return render(request, 'genai.html', context={'answer':answer.text.strip()})
 
     
+@login_required(login_url='login_page')
+def user_profile_edit(request, pk):
+    user = User.objects.get(id=pk)
+    form  = UserForm(instance=user)
+    if request.method == "POST":
+        form  = UserForm(request.POST ,request.FILES,instance=user)
+        print(form)
+        if form.is_valid():
+            print(form.is_valid())
+            form.save()
+            return redirect('user', pk=pk)  # type: ignore
+        
+    return render(request, 'user_profile_edit.html', context={'form':form})
+
+
+

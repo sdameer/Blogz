@@ -13,5 +13,7 @@ urlpatterns = [
     path('contactus', contact_us, name='contact_us'),
     path('develpoer_page', developer_page, name='developer_page'),
     path('genai',genai_title,name='genai'),
+    path('user_profile_edit/<str:pk>',user_profile_edit,name='user_profile_edit'),
+
     
 ]

@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 import requests
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login 
 
 DJOSER_BASE_URL = 'https://blogz-django.onrender.com/auth'
 
@@ -10,21 +11,28 @@ DJOSER_BASE_URL = 'https://blogz-django.onrender.com/auth'
 
 
 
-from django.contrib.auth import authenticate, login as auth_login
 
 def login_view(request):
+    
+    if request.user.is_authenticated():
+        return redirect('home')
+    
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
         user = authenticate(request, email=email, password=password)
         if user:
-            auth_login(request, user)
+            login(request, user)
             return redirect('home')
     return render(request, 'login.html')
 
 
 
 def register(request):
+    
+    if request.user.is_authenticated():
+        return redirect('home')
+    
     if request.method == "POST":
         username = request.POST.get("username")
         email = request.POST.get("email")
@@ -89,7 +97,7 @@ def reset_password_confirm(request):
         if new_password != re_password:
             messages.error(request, "Passwords do not match.")
         else:
-            response = requests.post('http://127.0.0.1:8000/auth/users/reset_password_confirm/', data={
+            response = requests.post(f'{DJOSER_BASE_URL}/auth/users/reset_password_confirm/', data={
                 "uid": uid,
                 "token": token,
                 "new_password": new_password,

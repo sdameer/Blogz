@@ -1,5 +1,11 @@
 from django.forms import ModelForm
-from .models import Blog
+from .models import Blog ,User
+
+class UserForm(ModelForm):
+    
+    class Meta:
+        model = User
+        fields = ['username','email','bio','image']
 
 
 class BlogForm(ModelForm):
