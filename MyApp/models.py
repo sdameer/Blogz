@@ -6,8 +6,14 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
+    username = None  
+    email = models.EmailField(unique=True)
+
     bio = models.TextField(null=True)
     image = models.ImageField(upload_to='blog_images/', null=True)
+
+    USERNAME_FIELD = 'email'  
+    REQUIRED_FIELDS = [] 
 
 
 class Topic(models.Model):
