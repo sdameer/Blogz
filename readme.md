@@ -6,7 +6,7 @@
 
 ## 🚀 About the Project
 
-**Blogz** is a fully functional, full-stack blog web application built using **Django** for the backend and **htmol** **css**  **Bootstrap** for the frontend. This is my first full-fledged project created while learning Django during my 5th semester of engineering.
+**Blogz** is a fully functional, full-stack blog web application built using **Django** for the backend and **html** **css**  **Bootstrap** for the frontend. This is my first full-fledged project created while learning Django during my 5th semester of engineering.
 
 ### 🧠 Key Features
 
