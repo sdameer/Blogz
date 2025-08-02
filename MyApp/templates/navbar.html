@@ -105,7 +105,7 @@
             padding: 8px 12px;
             color: var(--text-color);
             font-size: 14px;
-            width: 300px;
+            width: 250px;
             transition: width 0.3s ease;
         }
 
@@ -320,10 +320,12 @@
                 </div>
                 
                 <!-- Add Blog Button for authenticated users -->
-                {% if user.is_authenticated %}
-                <a href="{% url 'add_blog' %}" class="nav-link primary">Add Blog</a>
                 &nbsp;&nbsp;
-                {% endif %}
+                <small>
+                    <a href="{% url 'add_blog' %}" class="nav-link primary">Add Blog</a>
+                </small>
+                &nbsp;&nbsp;
+                
             </div>
             
             <div class="navbar-right">
