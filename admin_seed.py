@@ -1,10 +1,15 @@
+"""
+this file was used to add an admin account to the database
+because shell was not available in deployment on render.com    
+"""
+
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 email = "admin@gmail.com"
-username = "admin"
-password = "admin12345"
+username = ""
+password = ""
 
 if not User.objects.filter(email=email).exists():
     print("Creating admin user...")
