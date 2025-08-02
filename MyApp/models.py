@@ -8,9 +8,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     bio = models.TextField(null=True)
     image = models.ImageField(upload_to='blog_images/', null=True)
-    
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+
 
 class Topic(models.Model):
     topic_name = models.CharField(max_length=50)
