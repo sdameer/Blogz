@@ -126,10 +126,10 @@ WSGI_APPLICATION = 'blogz.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "blogz_django_si71",
-        'USER': "blogz_django_si71_user",
+        'NAME': "blogz_django_spxl",
+        'USER': "blogz_django_spxl_user",
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST':"dpg-d26nvk0gjchc73e87feg-a",
+        'HOST':"dpg-d26o680gjchc73e8jmh0-a",
         'PORT': '5432'
     }
 }
@@ -186,7 +186,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'MyApp.User'
+AUTH_USER_MODEL = 'MyAuth.User'
 
 
 REST_FRAMEWORK = {

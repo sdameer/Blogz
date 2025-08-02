@@ -13,8 +13,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 # for blogs :
-from .models import Blog, Topic, Message , User
-from .forms import BlogForm ,UserForm
+from .models import Blog, Topic, Message 
+from .forms import BlogForm 
+from MyAuth.forms import UserForm
 
 # for seach bar :
 from django.db.models import Q
