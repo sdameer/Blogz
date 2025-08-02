@@ -5,7 +5,7 @@ import requests
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login 
 
-DJOSER_BASE_URL = 'https://blogz-django.onrender.com/auth'
+DJOSER_BASE_URL = 'https://blogz-sdameer.onrender.com/auth'
 
 
 

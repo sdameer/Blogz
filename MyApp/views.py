@@ -215,6 +215,7 @@ def genai_title(request):
     
 @login_required(login_url='login_page')
 def user_profile_edit(request, pk):
+    User = get_user_model()
     user = User.objects.get(id=pk)
     form  = UserForm(instance=user)
     if request.method == "POST":
