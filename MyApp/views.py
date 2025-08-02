@@ -52,7 +52,7 @@ def update(request, pk):
     blog = Blog.objects.get(id=pk)
     form = BlogForm(instance=blog)
     if request.method == "POST":
-        form = BlogForm(request.POST, instance=blog)
+        form = BlogForm(request.POST,request.FILES, instance=blog)
         if form.is_valid():
             form.save()
             return redirect('blog_body', pk=blog.id)  # type: ignore
