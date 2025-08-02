@@ -415,7 +415,7 @@
         <h2>Details : </h2> 
         <h2>Name : {{ user.username }}</h2>
         <h2>Email : {{user}}</h2>
-        <a href="{% url 'user_profile_edit' user.id %}">Edit profile</a>
+        <a href="{% url 'user_profile_edit' user.id %}" style="text-decoration: none; color:rgba(255, 255, 255, 0.9);">Edit profile</a>
 
     {% endif %}
 </div>
