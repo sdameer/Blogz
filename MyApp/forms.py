@@ -5,7 +5,7 @@ class UserForm(ModelForm):
     
     class Meta:
         model = User
-        fields = ['username','email','bio','image']
+        fields = ['email','bio','image']
 
 
 class BlogForm(ModelForm):
