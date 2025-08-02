@@ -126,10 +126,10 @@ WSGI_APPLICATION = 'blogz.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "blogz_django",
-        'USER': "blogz_django_user",
-        'PASSWORD': "XpiaG0QHRDgAtsNlVVwj0Xd042GUsIoW",
-        'HOST':"dpg-d26h042dbo4c73fsl200-a",
+        'NAME': "blogz_django_5dem",
+        'USER': "blogz_django_5dem_user",
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST':"dpg-d26no08gjchc73e7pjkg-a",
         'PORT': '5432'
     }
 }
