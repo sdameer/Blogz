@@ -1,8 +1,6 @@
 # 📝 Blogz – A Django-Powered Blogging Platform
 
 🔗 **Live Project**: [https://blogz-sdameer.onrender.com](https://blogz-sdameer.onrender.com)  
-📹 **Demo Video**: *(Will be added soon)*  
-📸 **Screenshots**: *(Will be added soon)*
 
 ---
 
@@ -48,7 +46,7 @@ This project was a solo effort developed as part of my Django learning journey. 
 ## 👤 About Me
 
 **Syed Ameer**  
-🎓 5th Semester Student | Aspiring Full-Stack Django Developer  
+🎓 5th Semester Student | Aspiring ML engineer and  Django Developer  
 🔗 [GitHub: @sdameer](https://github.com/sdameer)  
 🔗 [LinkedIn: @sydameer](https://www.linkedin.com/in/sydameer)
 
