@@ -14,7 +14,7 @@ DJOSER_BASE_URL = 'https://blogz-django.onrender.com/auth'
 
 def login_view(request):
     
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('home')
     
     if request.method == "POST":
@@ -30,7 +30,7 @@ def login_view(request):
 
 def register(request):
     
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('home')
     
     if request.method == "POST":
