@@ -117,3 +117,7 @@ def reset_password_confirm(request):
 
 def custom_404_view(request, exception):
     return render(request, 'custom_404.html', status=404)
+
+
+def activate_url(request):
+    return render(request ,  'activate.html')
