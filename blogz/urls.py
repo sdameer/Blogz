@@ -47,6 +47,6 @@ handler404 = 'MyAuth.views.custom_404_view'
 from django.conf.urls.static import static
 
 # Serve media files (only if DEBUG = True OR temp fix for Render)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Custom error handler
