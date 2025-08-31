@@ -36,7 +36,8 @@ urlpatterns = [
     # djoser :
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),  # if using token-based
-    path('activate/', TemplateView.as_view(template_name='activate.html'),
+    # path('activate/', TemplateView.as_view(template_name='activate.html'),name='activate'),
+        path('activate/<uidb64>/<token>/', TemplateView.as_view(template_name='activate.html'),
          name='activate'),
     path('set-password/', reset_password_confirm, name='set_password'),
     path('auth/', include('djoser.urls.jwt')),
