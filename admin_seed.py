@@ -8,8 +8,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 email = "admin@gmail.com"
-username = ""
-password = ""
+username = "admin12345"
+password = "admin12345"
 
 if not User.objects.filter(email=email).exists():
     print("Creating admin user...")
